@@ -34,6 +34,8 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'rspec-rails'
+
 group :development do
   gem 'sqlite3', '1.3.8'
 end
