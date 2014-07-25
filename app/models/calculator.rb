@@ -37,4 +37,5 @@ class Calculator < ActiveRecord::Base
     self.save
   end
 
+
 end

@@ -16,6 +16,10 @@ class Parser
         @calculator * operand
       when "div"
         @calculator / operand
+      when "reset"
+        @calculator.reset
+      when "exit"
+        Process.exit
       else
         return false
     end
