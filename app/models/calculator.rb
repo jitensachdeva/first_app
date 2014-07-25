@@ -1,5 +1,5 @@
 class Calculator < ActiveRecord::Base
-  after_create :initialize_state
+  before_save :initialize_state
   # def initialize state=0
   #   @state = state
   # end
