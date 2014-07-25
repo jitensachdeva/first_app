@@ -65,5 +65,19 @@ describe Calculator do
 
     end
 
+    context "#reset" do
+      it "should perform division" do
+        #calculator * 5
+        calculator.reset
+        expect(calculator.state).to eq(0)
+      end
+
+      it "should save the state" do
+       # calculator * 5
+        calculator.reset
+        expect(calculator.reload.state).to eq(0)
+      end
+    end
+
   end
 end
