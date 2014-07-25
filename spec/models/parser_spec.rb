@@ -48,12 +48,6 @@ describe 'Parser' do
       end
     end
 
-    context '#exit' do
-      it 'should exit operation on "exit" ' do
-        expect(Process).to receive(:exit)
-        parser.perform_operation("exit")
-      end
-    end
 
 
   end
