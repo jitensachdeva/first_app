@@ -1,8 +1,12 @@
 class Calculator < ActiveRecord::Base
-
+  after_create :initialize_state
   # def initialize state=0
   #   @state = state
   # end
+
+  def initialize_state
+    self.state =0 if self.state.nil?
+  end
 
   def + value
     self.state += value
