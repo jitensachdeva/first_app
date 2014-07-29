@@ -14,7 +14,7 @@ var Calculator = function (templateSelector) {
     this.created = false;
     this.observers = $({});
     this.initialize();
-}
+};
 
 Calculator.prototype = {
 
@@ -23,12 +23,12 @@ Calculator.prototype = {
         console.log('inside initialize');
         console.log(this.button);
         //var self = this
-        this.button.click(this.click_handler.bind(this))
+        this.button.click(this.click_handler.bind(this));
     },
 
     click_handler: function () {
         console.log('clicked call on -');
-        console.log(this)
+        console.log(this);
         if (!this.created) {
             this.create();
         }
@@ -47,7 +47,7 @@ Calculator.prototype = {
             url: "/api/create"
 
         })
-            .done(this.process_create_response.bind(this))
+            .done(this.process_create_response.bind(this));
     },
 
     process_create_response: function (data, textStatus, jqXHR) {
@@ -74,7 +74,7 @@ Calculator.prototype = {
             url: "/api/update",
             data: {command: this.command.val()}
         })
-            .done(this.processUpdateResponse.bind(this))
+            .done(this.processUpdateResponse.bind(this));
     },
 
     processUpdateResponse: function (data, textStatus, jqXHR) {
@@ -110,14 +110,14 @@ Calculator.prototype = {
 
     handleCreateCompleted: function(event,jqXHR){
         console.log("inside handleCreateCompleted");
-        console.log(this)
+        console.log(this);
         console.log("response code -->" + jqXHR.status);
 
         if (jqXHR.status == 201) {
-            this.error.innerHTML = "<h3>Calculator created.</h3>"
+            this.error.innerHTML = "<h3>Calculator created.</h3>";
             this.created = true;
         } else if (jqXHR.status == 200) {
-            this.error.innerHTML = "<h3>Calculator found.</h3>"
+            this.error.innerHTML = "<h3>Calculator found.</h3>";
             this.created = true;
         }
     },
@@ -141,6 +141,14 @@ Calculator.prototype = {
         this.observers.on("calculator:update", otherCalculator.handleUpdateCompleted.bind(otherCalculator));
     }
 
+};
+
+function registerObservers(newCalculator){
+    for(var i=0; i < calculatorArray.length ; i++){
+        calculatorArray[i].registerObserver(newCalculator);
+        newCalculator.registerObserver(calculatorArray[i]);
+    }
+    calculatorArray.push(newCalculator);
 }
 
 $('document').ready(function () {
@@ -155,13 +163,6 @@ $('document').ready(function () {
         console.log("clicked button add calculator");
         var calculator = new Calculator("#template #container");
         registerObservers(calculator);
-    })
-})
+    });
+});
 
-function registerObservers(newCalculator){
-    for(var i=0; i < calculatorArray.length ; i++){
-        calculatorArray[i].registerObserver(newCalculator);
-        newCalculator.registerObserver(calculatorArray[i]);
-    }
-    calculatorArray.push(newCalculator);
-}

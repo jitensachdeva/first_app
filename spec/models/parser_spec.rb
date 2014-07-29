@@ -48,6 +48,13 @@ describe 'Parser' do
       end
     end
 
+    context '#unknown' do
+      it 'should not perform operation on "unknown" and return 5  ' do
+        parser.perform_operation("unknown 5")
+        expect(calculator.state).to eq(5)
+      end
+    end
+
 
 
   end
