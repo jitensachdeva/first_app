@@ -1,11 +1,18 @@
 FirstApp::Application.routes.draw do
+  get "calculator_client/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
-  root 'calculator#index'
+  root 'calculator_client#index'
   put 'calculator' => 'calculator#update'
+
+  namespace :api do
+    post 'create' => 'calculator#create'
+    put 'update' => 'calculator#update'
+  end
+
   #get 'calculator' => 'calculator#update'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

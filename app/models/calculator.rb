@@ -10,24 +10,24 @@ class Calculator < ActiveRecord::Base
 
   def + value
     self.state += value
-    self.save
+    save_state
   end
 
   def - value
     self.state -= value
-    self.save
+   save_state
   end
 
   def * value
     self.state *= value
-    self.save
+    save_state
   end
 
   def / value
       if(value != 0)
         self.state /= value
         self.state.round(2)
-        self.save
+        save_state
       else
         return "can not divide by zero"
       end
@@ -38,6 +38,12 @@ class Calculator < ActiveRecord::Base
 
   def reset
     self.state = 0
+    save_state
+  end
+
+  private
+
+  def save_state
     self.save
   end
 
