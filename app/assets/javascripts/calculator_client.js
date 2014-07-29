@@ -62,7 +62,7 @@ Calculator.prototype = {
         console.log("response code -->" + jqXHR.statusCode);
         console.log("response code -->" + jqXHR.status);
 
-        this.handleCreateCompleted(undefined,jqXHR);
+        this.handleCreateCompleted(undefined, jqXHR);
         this.notify("calculator:create", jqXHR);
 
     },
@@ -82,7 +82,7 @@ Calculator.prototype = {
         console.log(self);
         console.log("this");
         console.log(this);
-        this.handleUpdateCompleted(undefined,data , this.command.val());
+        this.handleUpdateCompleted(undefined, data, this.command.val());
         //self.notify_observers(data,textStatus,jqXHR);
 //        $.each(this.observers, function(index, observers){
 //            observers.trigger("calculator:update");
@@ -90,7 +90,7 @@ Calculator.prototype = {
         this.notify("calculator:update", [data, this.command.val()]);
     },
 
-    handleUpdateCompleted: function(event,data, command){
+    handleUpdateCompleted: function (event, data, command) {
 
         console.log("inside handleUpdateCompleted");
         console.log("arguments");
@@ -108,7 +108,7 @@ Calculator.prototype = {
         $(this.commandHistory).append("<h3> Operation ->" + command + " . Value ->" + data.result + "</h3>");
     },
 
-    handleCreateCompleted: function(event,jqXHR){
+    handleCreateCompleted: function (event, jqXHR) {
         console.log("inside handleCreateCompleted");
         console.log(this);
         console.log("response code -->" + jqXHR.status);
@@ -122,13 +122,13 @@ Calculator.prototype = {
         }
     },
 
-    notify: function(event, params){
+    notify: function (event, params) {
         console.log("inside notify");
         console.log("this");
         console.log(this);
         console.log("params");
         console.log(params);
-        this.observers.trigger(event, params );
+        this.observers.trigger(event, params);
     },
 
     registerObserver: function (otherCalculator) {
@@ -143,26 +143,38 @@ Calculator.prototype = {
 
 };
 
-function registerObservers(newCalculator){
-    for(var i=0; i < calculatorArray.length ; i++){
-        calculatorArray[i].registerObserver(newCalculator);
-        newCalculator.registerObserver(calculatorArray[i]);
+
+var Calculators = function () {
+    this.calculatorArray = [];
+    this.addCalculatorButton = $.find('#addCalculatorButton');
+    this.initialize();
+};
+
+Calculators.prototype = {
+    initialize: function () {
+        $(this.addCalculatorButton).click(function () {
+            console.log("clicked button add calculator");
+            this.generateNewCalculator();
+        }.bind(this));
+    },
+
+    generateNewCalculator: function () {
+        var calculator = new Calculator("#template #container");
+        this.registerObservers(calculator);
+    },
+
+    registerObservers: function (newCalculator) {
+        for (var i = 0; i < this.calculatorArray.length; i++) {
+            this.calculatorArray[i].registerObserver(newCalculator);
+            newCalculator.registerObserver(this.calculatorArray[i]);
+        }
+        this.calculatorArray.push(newCalculator);
     }
-    calculatorArray.push(newCalculator);
-}
+};
 
 $('document').ready(function () {
     console.log("I am ready now");
-//    var calculator = new Calculator('#calculator1');
-//    var calculator2 = new Calculator('#calculator2');
-//    calculator.registerObserver(calculator2);
-//    calculator2.registerObserver(calculator);
-    calculatorArray= [];
+    var calculators = new Calculators();
 
-    $('#addCalculatorButton').click(function () {
-        console.log("clicked button add calculator");
-        var calculator = new Calculator("#template #container");
-        registerObservers(calculator);
-    });
 });
 
