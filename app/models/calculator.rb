@@ -1,4 +1,5 @@
 class Calculator < ActiveRecord::Base
+  belongs_to :user
   before_save :initialize_state
   # def initialize state=0
   #   @state = state

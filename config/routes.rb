@@ -1,12 +1,15 @@
 FirstApp::Application.routes.draw do
+  devise_for :users
   get "calculator_client/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
-  root 'calculator_client#index'
+  #root 'calculator_client#index'
+  root 'calculator#index'
   put 'calculator' => 'calculator#update'
+  get 'calculator' => 'calculator#index'
 
   namespace :api do
     post 'create' => 'calculator#create'
