@@ -36,6 +36,8 @@ end
 
 #gem 'rspec-rails'
 
+gem 'devise'
+
 group :test do
   gem 'simplecov', require: false, group: :test
   gem 'metric_fu'
